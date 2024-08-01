@@ -48,13 +48,13 @@ flutter_native_splash:
   android: true
   ios: true
   color: "#FFFFFF"
-  image: "assets/logo_adaptive.png"
+  image: "assets/logo_splash.png"
   branding: "assets/branding.png"
   branding_mode: bottom
 
   android_12:
     color: "#FFFFFF"
-    image: "assets/logo_adaptive.png"
+    image: "assets/logo_splash.png"
 
 flutter_launcher_icons:
   android: "launcher_icon"

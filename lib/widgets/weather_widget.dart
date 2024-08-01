@@ -44,59 +44,58 @@ class WeatherCard extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: AppTheme.iconColor,
-                          size: sizew(context) * 0.07,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            final TextEditingController controller =
-                                TextEditingController(text: areaName);
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Change Area Name'),
-                                  content: TextField(
-                                    controller: controller,
-                                    decoration: const InputDecoration(
-                                      hintText: 'Enter new area name',
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        ref
-                                            .read(areaNameProvider.notifier)
-                                            .state = controller.text;
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('Update'),
-                                    ),
-                                  ],
-                                );
-                              },
+                    InkWell(
+                      onTap: () {
+                        final TextEditingController controller =
+                            TextEditingController(text: areaName);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Change Area Name'),
+                              content: TextField(
+                                controller: controller,
+                                decoration: const InputDecoration(
+                                  hintText: 'Enter new area name',
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    ref.read(areaNameProvider.notifier).state =
+                                        controller.text;
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Update'),
+                                ),
+                              ],
                             );
                           },
-                          child: Text(
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: AppTheme.iconColor,
+                            size: sizew(context) * 0.07,
+                          ),
+                          Text(
                             areaName,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: sizew(context) * 0.05,
                                 color: AppTheme.textColor),
                           ),
-                        ),
-                        const Icon(Icons.arrow_drop_down, color: Colors.black)
-                      ],
+                          const Icon(Icons.arrow_drop_down, color: Colors.black)
+                        ],
+                      ),
                     ),
                     _dateTime(dateTime),
                   ],

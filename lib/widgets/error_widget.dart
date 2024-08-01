@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_buzz/models/weather_model.dart';
 import 'package:weather_buzz/screens/settings.dart';
 import 'package:weather_buzz/utils/constants.dart';
@@ -36,7 +35,10 @@ class WeatherError extends StatelessWidget {
                     const Icon(Icons.arrow_drop_down, color: Colors.black)
                   ],
                 ),
-                _dateTime(DateTime.now()),
+                Text(
+                  "  Last updated: TBD",
+                  style: TextStyle(fontSize: 12, color: AppTheme.textColor),
+                ),
               ],
             ),
             IconButton(
@@ -119,21 +121,6 @@ class WeatherError extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _dateTime(DateTime dateTime) {
-    return Row(
-      children: [
-        Text(
-          "  Last updated: ${DateFormat('h:mm a').format(dateTime)}",
-          style: TextStyle(fontSize: 12, color: AppTheme.textColor),
-        ),
-        Text(
-          DateFormat(' E').format(dateTime),
-          style: TextStyle(fontSize: 12, color: AppTheme.textColor),
         ),
       ],
     );
