@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:weather_buzz/models/weather_model.dart';
 import 'package:weather_buzz/providers/news_provider.dart';
 import 'package:weather_buzz/providers/temp_provider.dart';
 import 'package:weather_buzz/screens/settings.dart';
 import 'package:weather_buzz/utils/constants.dart';
+import 'package:weather_buzz/widgets/error_widget.dart';
 
 class WeatherCard extends ConsumerWidget {
   const WeatherCard({super.key});
@@ -24,8 +26,7 @@ class WeatherCard extends ConsumerWidget {
             ? weather.temperature?.celsius?.toStringAsFixed(0) ?? 'N/A'
             : weather.temperature?.fahrenheit?.toStringAsFixed(0) ?? 'N/A';
         final weatherDescription =
-            toBeginningOfSentenceCase(weather.weatherDescription ?? '') ??
-                'N/A';
+            toBeginningOfSentenceCase(weather.weatherDescription ?? 'No Data');
         final humidity = weather.humidity?.toStringAsFixed(0) ?? 'N/A';
         final windSpeed = weather.windSpeed?.toStringAsFixed(0) ?? 'N/A';
         final cloudiness = weather.cloudiness?.toStringAsFixed(0) ?? 'N/A';
@@ -318,7 +319,33 @@ class WeatherCard extends ConsumerWidget {
           ],
         ),
       ),
-      error: (error, stack) => Center(child: Text('Error: $error')),
+      error: (Object error, StackTrace stackTrace) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(
+                  'Error',
+                  style: TextStyle(color: Colors.red[700]),
+                ),
+                content: const Text('City not found. Try other cities'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'OK',
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        });
+        return const WeatherError();
+      },
     );
   }
 
@@ -332,32 +359,6 @@ class WeatherCard extends ConsumerWidget {
         Text(
           DateFormat(' E').format(dateTime),
           style: TextStyle(fontSize: 12, color: AppTheme.textColor),
-        ),
-      ],
-    );
-  }
-}
-
-class IconText extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const IconText({super.key, required this.icon, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: sizew(context) * 0.055,
-          color: Colors.blue,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          text,
-          style:
-              TextStyle(fontSize: sizew(context) * 0.033, color: Colors.white),
         ),
       ],
     );

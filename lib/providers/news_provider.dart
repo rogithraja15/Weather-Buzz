@@ -28,7 +28,7 @@ final newsCategoryProvider = StateProvider<String>((ref) {
       }
     },
     loading: () => 'happiness',
-    error: (error, stack) => 'happiness',
+    error: (error, stack) => '',
   );
 });
 

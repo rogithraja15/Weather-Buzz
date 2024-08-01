@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:weather_buzz/providers/temp_provider.dart';
 import 'package:weather_buzz/utils/constants.dart';
+import 'package:weather_buzz/widgets/error_widget.dart';
 
 class ForecastCard extends ConsumerWidget {
   const ForecastCard({super.key});
@@ -41,7 +42,9 @@ class ForecastCard extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(5, (index) {
                     final forecast = forecasts[index * 8];
-                    final temperature = forecast['temperature'];
+                    final temperature = forecast['temperature'] ?? 0.0;
+                    final icon = forecast['icon'] ?? '01d';
+                    final date = forecast['date'] ?? DateTime.now();
 
                     return Expanded(
                       child: Container(
@@ -61,11 +64,17 @@ class ForecastCard extends ConsumerWidget {
                         child: Column(
                           children: [
                             Image.network(
-                              'http://openweathermap.org/img/wn/${forecast['icon']}@2x.png',
+                              'http://openweathermap.org/img/wn/$icon@2x.png',
                               height: sizew(context) * 0.12,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  height: sizew(context) * 0.12,
+                                  color: Colors.transparent,
+                                );
+                              },
                             ),
                             Text(
-                              DateFormat('E').format(forecast['date']),
+                              DateFormat('E').format(date),
                               style: AppTheme.defaultTextStyle,
                             ),
                             Text(
@@ -159,7 +168,9 @@ class ForecastCard extends ConsumerWidget {
           ),
         ),
       ),
-      error: (error, stackTrace) => Center(child: Text('Error: $error')),
+      error: (error, stackTrace) {
+        return const ForecastError();
+      },
     );
   }
 }

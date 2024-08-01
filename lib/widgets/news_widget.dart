@@ -118,7 +118,7 @@ class NewsWidget extends ConsumerWidget {
                     ),
                   ),
                 ),
-                error: (error, stack) => Center(child: Text('Error: $error')),
+                error: (error, stack) => const Text(''),
               ),
             ],
           ),
@@ -213,7 +213,11 @@ class NewsWidget extends ConsumerWidget {
                   ),
                 ),
               ),
-              error: (error, stack) => Center(child: Text('Error: $error')),
+              error: (error, stack) => Center(
+                  child: Text(
+                '$error',
+                style: const TextStyle(color: Colors.white),
+              )),
             ),
           ),
         ],

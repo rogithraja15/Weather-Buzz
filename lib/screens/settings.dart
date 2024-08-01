@@ -12,7 +12,7 @@ class SettingsPage extends ConsumerWidget {
     final currentCategory = ref.watch(newsCategoryProvider);
 
     String capitalizeFirstLetter(String text) {
-      if (text == null || text.isEmpty) {
+      if (text.isEmpty) {
         return text;
       }
       return text[0].toUpperCase() + text.substring(1).toLowerCase();
@@ -55,7 +55,7 @@ class SettingsPage extends ConsumerWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(capitalizeFirstLetter('$currentCategory')),
+                  Text(capitalizeFirstLetter(currentCategory)),
                   const Icon(Icons.arrow_drop_down),
                 ],
               ),
