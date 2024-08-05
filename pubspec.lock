@@ -360,6 +360,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  remove_emoji:
+    dependency: transitive
+    description:
+      name: remove_emoji
+      sha256: ed9e8463e8c9ca05b86fcddd4c0dbd2c2605a50d267f4ffa05496607924809e3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.10"
   riverpod:
     dependency: transitive
     description:
@@ -368,6 +376,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.1"
+  sentiment_dart:
+    dependency: "direct main"
+    description:
+      name: sentiment_dart
+      sha256: ddac8742cf5141f531eb1510b074ce715b9958cb02a763a4cc0a918768e4a0c8
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   shimmer:
     dependency: "direct main"
     description:

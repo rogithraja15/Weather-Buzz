@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_buzz/models/weather_model.dart';
 import 'package:weather_buzz/screens/settings.dart';
 import 'package:weather_buzz/utils/constants.dart';
+import 'package:weather_buzz/widgets/weather_widget.dart';
 
 class WeatherError extends StatelessWidget {
   const WeatherError({super.key});
@@ -18,22 +19,33 @@ class WeatherError extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      color: AppTheme.iconColor,
-                      size: sizew(context) * 0.07,
-                    ),
-                    Text(
-                      'Unknown',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: sizew(context) * 0.05,
-                          color: AppTheme.textColor),
-                    ),
-                    const Icon(Icons.arrow_drop_down, color: Colors.black)
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    print('Navigating to HomeScreen');
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WeatherCard()),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: AppTheme.iconColor,
+                        size: sizew(context) * 0.07,
+                      ),
+                      Text(
+                        'Unknown',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: sizew(context) * 0.05,
+                            color: AppTheme.textColor),
+                      ),
+                      const Icon(Icons.arrow_drop_down, color: Colors.black),
+                    ],
+                  ),
                 ),
                 Text(
                   "  Last updated: TBD",

@@ -44,8 +44,7 @@ class SettingsPage extends ConsumerWidget {
                     selectedCategory.toLowerCase();
               },
               itemBuilder: (BuildContext context) {
-                return ['Depressing', 'Fear', 'Happiness']
-                    .map((String category) {
+                return ['sadness', 'fear', 'joy'].map((String category) {
                   return PopupMenuItem<String>(
                     value: category.toLowerCase(),
                     child: Text(category),

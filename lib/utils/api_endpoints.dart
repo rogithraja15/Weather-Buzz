@@ -1,4 +1,9 @@
 const OPENWEATHER_API_KEY = '170438a437f9912cf59796bec5ad8d9f';
-const NEWS_API_KEY = '81e4bd492d17455cb0f1b5593385e805';
+const NEWS_API_KEY = 'fad287e2a548476a919d1322dd2de9ec';
+const HUGGING_FACE_API_KEY = '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';
 
 //81e4bd492d17455cb0f1b5593385e805
+
+//Hugging API Backup
+//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
+//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

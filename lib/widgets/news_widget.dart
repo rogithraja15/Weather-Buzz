@@ -17,22 +17,10 @@ class NewsWidget extends ConsumerWidget {
     Color cardColor;
     String categoryText;
 
-    switch (newsCategory) {
-      case 'depressing':
-        cardColor = Colors.blueAccent;
-        categoryText = 'Depressing';
-        break;
-      case 'fear':
-        cardColor = Colors.redAccent;
-        categoryText = 'Fear';
-        break;
-      case 'happiness':
-        cardColor = Colors.green;
-        categoryText = 'Happiness';
-        break;
-      default:
-        cardColor = Colors.grey;
-        categoryText = 'Unknown';
+    determineCategory(tempInCelsius) {
+      if (tempInCelsius <= 10) return 'sadness';
+      if (tempInCelsius >= 30) return 'fear';
+      return 'joy';
     }
 
     return Container(
@@ -55,7 +43,6 @@ class NewsWidget extends ConsumerWidget {
           SizedBox(height: sizew(context) * 0.01),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('WEATHER BASED NEWS',
                   style: TextStyle(
@@ -64,18 +51,12 @@ class NewsWidget extends ConsumerWidget {
               weatherAsyncValue.when(
                 data: (weather) {
                   final tempInCelsius = weather.temperature?.celsius ?? 0;
-                  final autoCategory = tempInCelsius <= 10
-                      ? 'depressing'
-                      : tempInCelsius >= 30
-                          ? 'fear'
-                          : 'happiness';
-
-                  final displayCategory = newsCategory != autoCategory
-                      ? newsCategory
-                      : autoCategory;
+                  final autoCategory = determineCategory(tempInCelsius);
+                  final displayCategory =
+                      newsCategory.isNotEmpty ? newsCategory : autoCategory;
 
                   switch (displayCategory) {
-                    case 'depressing':
+                    case 'sadness':
                       cardColor = Colors.blueAccent;
                       categoryText = 'Depressing';
                       break;
@@ -83,9 +64,9 @@ class NewsWidget extends ConsumerWidget {
                       cardColor = Colors.redAccent;
                       categoryText = 'Fear';
                       break;
-                    case 'happiness':
+                    case 'joy':
                       cardColor = Colors.green;
-                      categoryText = 'Happiness';
+                      categoryText = 'Happy';
                       break;
                     default:
                       cardColor = Colors.grey;
@@ -110,8 +91,8 @@ class NewsWidget extends ConsumerWidget {
                   baseColor: Colors.grey[300]!,
                   highlightColor: Colors.grey[100]!,
                   child: Container(
-                    width: sizew(context) * 0.4,
-                    height: sizeh(context) * 0.07,
+                    width: sizew(context) * 0.1,
+                    height: sizeh(context) * 0.028,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -129,10 +110,22 @@ class NewsWidget extends ConsumerWidget {
                   return const Center(child: Text('No news available'));
                 }
 
+                final filteredNewsItems = newsItems.where((newsItem) {
+                  final emotion = newsItem['emotion'];
+                  return emotion == newsCategory;
+                }).toList();
+
+                print("Filtered news items: $filteredNewsItems");
+
+                if (filteredNewsItems.isEmpty) {
+                  return const Center(
+                      child: Text('No relevant news available'));
+                }
+
                 return ListView.builder(
-                  itemCount: newsItems.length,
+                  itemCount: filteredNewsItems.length,
                   itemBuilder: (context, index) {
-                    final newsItem = newsItems[index];
+                    final newsItem = filteredNewsItems[index];
                     return ListTile(
                       onTap: () {
                         Navigator.push(
@@ -213,11 +206,7 @@ class NewsWidget extends ConsumerWidget {
                   ),
                 ),
               ),
-              error: (error, stack) => Center(
-                  child: Text(
-                '$error',
-                style: const TextStyle(color: Colors.white),
-              )),
+              error: (error, stack) => Center(child: Text('Error: $error')),
             ),
           ),
         ],
