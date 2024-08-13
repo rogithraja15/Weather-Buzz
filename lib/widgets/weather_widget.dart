@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:weather_buzz/models/weather_model.dart';
-import 'package:weather_buzz/providers/news_provider.dart';
 import 'package:weather_buzz/providers/temp_provider.dart';
+import 'package:weather_buzz/providers/weather_provider.dart';
 import 'package:weather_buzz/screens/settings.dart';
 import 'package:weather_buzz/utils/constants.dart';
 import 'package:weather_buzz/widgets/error_widget.dart';
@@ -332,6 +332,7 @@ class WeatherCard extends ConsumerWidget {
                 actions: [
                   TextButton(
                     onPressed: () {
+                      ref.read(areaNameProvider.notifier).state = "Chennai";
                       Navigator.of(context).pop();
                     },
                     child: const Text(

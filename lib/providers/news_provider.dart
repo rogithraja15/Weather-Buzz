@@ -1,16 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather/weather.dart';
+import 'package:weather_buzz/providers/weather_provider.dart';
 import 'package:weather_buzz/services/news_service.dart';
-import 'package:weather_buzz/utils/api_endpoints.dart';
-
-final areaNameProvider = StateProvider<String>((ref) => 'Bangalore');
-
-final weatherProvider = FutureProvider<Weather>((ref) async {
-  final areaName = ref.watch(areaNameProvider);
-  final weatherFactory = WeatherFactory(OPENWEATHER_API_KEY);
-  final weather = await weatherFactory.currentWeatherByCityName(areaName);
-  return weather;
-});
 
 final newsCategoryProvider = StateProvider<String>((ref) {
   final weatherAsync = ref.watch(weatherProvider);

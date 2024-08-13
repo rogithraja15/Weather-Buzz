@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_buzz/providers/news_provider.dart';
+import 'package:weather_buzz/providers/weather_provider.dart';
 import 'package:weather_buzz/services/weather_service.dart';
 
 final temperatureUnitProvider = StateProvider<bool>((ref) {

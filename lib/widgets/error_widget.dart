@@ -21,8 +21,6 @@ class WeatherError extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print('Navigating to HomeScreen');
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(

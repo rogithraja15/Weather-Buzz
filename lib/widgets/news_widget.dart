@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:weather_buzz/providers/news_provider.dart';
+import 'package:weather_buzz/providers/weather_provider.dart';
 import 'package:weather_buzz/screens/news_page.dart';
 import 'package:weather_buzz/utils/constants.dart';
 
@@ -114,8 +115,6 @@ class NewsWidget extends ConsumerWidget {
                   final emotion = newsItem['emotion'];
                   return emotion == newsCategory;
                 }).toList();
-
-                print("Filtered news items: $filteredNewsItems");
 
                 if (filteredNewsItems.isEmpty) {
                   return const Center(

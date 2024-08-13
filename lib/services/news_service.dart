@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:weather_buzz/utils/api_endpoints.dart';
+import 'package:weather_buzz/utils/api_endpoints.env';
 
 class NewsService {
   final String _apiKey = NEWS_API_KEY;
@@ -17,8 +17,6 @@ class NewsService {
         Uri.parse(
             '$_baseUrl?apiKey=$_apiKey&q=$query&page=$page&pageSize=$pageSize'),
       );
-
-      print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -52,7 +50,6 @@ class NewsService {
         throw Exception('Failed to load news: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching news: $e');
       rethrow;
     }
   }
@@ -68,27 +65,17 @@ class NewsService {
         body: jsonEncode({'inputs': text}),
       );
 
-      print("Emotion Response body: ${response.body}");
-
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        if (data is List && data.isNotEmpty && data.first is List) {
-          final innerList = data.first as List;
-          if (innerList.isNotEmpty && innerList.first is Map<String, dynamic>) {
-            return innerList.first as Map<String, dynamic>;
-          } else {
-            throw Exception(
-                'Expected a Map within the inner List for emotion analysis');
-          }
-        } else {
-          throw Exception('Expected a List of Lists for emotion analysis');
-        }
+        final innerList = data.first as List;
+        return innerList.first as Map<String, dynamic>;
       } else {
-        throw Exception('Failed to analyze emotion: ${response.statusCode}');
+        throw Exception(
+            'Failed to analyze emotion, Try entering city name again');
       }
     } catch (e) {
-      print('Error analyzing emotion: $e');
+      print('Caught exception: $e');
       rethrow;
     }
   }
